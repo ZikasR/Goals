@@ -1,3 +1,5 @@
 package com.goals.domaine
 
-case class Goal(description String, startDate DateTime, endDate DateTime)
+import java.time.OffsetDateTime
+
+case class Goal(description: String, startDate: OffsetDateTime, endDate: OffsetDateTime)

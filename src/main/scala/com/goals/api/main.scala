@@ -1,7 +1,5 @@
 package com.goals.api 
 
-import io.vertx.lang.scala.ScalaVerticle
-import io.vertx.lang.scala.Types._
 import io.vertx.scala.core._
 
 object Hello extends App {

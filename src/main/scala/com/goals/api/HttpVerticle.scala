@@ -7,16 +7,20 @@ import scala.concurrent.Future
 
 class HttpVerticle extends ScalaVerticle {
 
-    override def startFuture(): Future[_] = {
+  override def startFuture(): Future[_] = {
 
-        val router = Router.router(vertx)
-        val route = router
-            .get("/hello")
-            .handler(_.response().end("world"))
+    val router = Router.router(vertx)
 
-        vertx
-            .createHttpServer()
-            .requestHandler(router.accept _)
-            .listenFuture(8666, "0.0.0.0")
-    }
+    router
+      .get("/hello")
+      .handler(_.response()
+        .putHeader("content-type", "text/plain")
+        .end("world")
+      )
+
+    vertx
+      .createHttpServer()
+      .requestHandler(router.accept _)
+      .listenFuture(8666, "0.0.0.0")
+  }
 }
