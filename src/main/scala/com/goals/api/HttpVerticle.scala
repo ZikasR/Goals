@@ -1,7 +1,7 @@
 package com.goals.api
 
 import io.vertx.lang.scala.ScalaVerticle
-import io.vertx.scala.ext.web.Router
+import io.vertx.scala.ext.web.{Router, RoutingContext}
 
 import scala.concurrent.Future
 
@@ -21,6 +21,10 @@ class HttpVerticle extends ScalaVerticle {
           .write("default handler\n")
         routingContext.next()
       })
+      .blockingHandler((routingContext: RoutingContext) => {
+        routingContext.response.write("blocking handler\n")
+        routingContext.next()
+      }, false)
 
     router
       .get("/hello")
