@@ -12,9 +12,19 @@ class HttpVerticle extends ScalaVerticle {
     val router = Router.router(vertx)
 
     router
+      .route()
+      .handler(routingContext => {
+        routingContext
+          .response()
+          .setChunked(true)
+          .putHeader("content-type", "text/plain")
+          .write("default handler\n")
+        routingContext.next()
+      })
+
+    router
       .get("/hello")
       .handler(_.response()
-        .putHeader("content-type", "text/plain")
         .end("world")
       )
 
