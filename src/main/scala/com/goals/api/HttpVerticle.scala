@@ -32,6 +32,21 @@ class HttpVerticle extends ScalaVerticle {
         .end("world")
       )
 
+    router
+      .route("/some/path")
+      .handler(_.response()
+        .end("this is a response to some path")
+      )
+
+    router
+      .post("/goals/:description/")
+      .handler(routingContext => {
+        val description = routingContext.request.getParam("description")
+        routingContext
+          .response
+          .end(s"this is the description of your Goal: ${description.get}")
+      })
+
     vertx
       .createHttpServer()
       .requestHandler(router.accept _)
