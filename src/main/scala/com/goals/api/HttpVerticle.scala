@@ -1,5 +1,6 @@
 package com.goals.api
 
+import io.vertx.core.http.HttpMethod
 import io.vertx.lang.scala.ScalaVerticle
 import io.vertx.scala.ext.web.{Router, RoutingContext}
 
@@ -46,6 +47,19 @@ class HttpVerticle extends ScalaVerticle {
           .response
           .end(s"this is the description of your Goal: ${description.get}")
       })
+
+    router
+      .route()
+      .path("/goals/multipleMethods/:description/")
+      .method(HttpMethod.POST)
+      .method(HttpMethod.PUT)
+      .handler(routingContext => {
+        val description = routingContext.request.getParam("description")
+        routingContext
+          .response
+          .end(s"this is a route that match for the 2 http methods : POST & PUT \n and here is the description: ${description.get} \n and the http method is ${routingContext.request().method()}")
+      })
+
 
     vertx
       .createHttpServer()
