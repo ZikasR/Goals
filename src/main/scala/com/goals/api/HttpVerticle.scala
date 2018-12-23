@@ -94,6 +94,17 @@ class HttpVerticle extends ScalaVerticle {
         .end()
       )
 
+    // KO: curl -X GET http://localhost:8666/test/mime/produce -H "Accept:application/xml"
+    // OK: curl -X GET http://localhost:8666/test/mime/produce -H "Accept:application/json"
+    router
+        .get("/test/mime/produce")
+        .produces("application/json")
+        .handler(_.response
+            .putHeader("content-type", "application/json")
+            .write("{data: 'Hello World in json'}")
+            .end
+        )
+
 
     vertx
       .createHttpServer()
