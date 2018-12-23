@@ -85,6 +85,15 @@ class HttpVerticle extends ScalaVerticle {
         .end()
       )
 
+    //curl -X GET http://localhost:8666/test/mime -H "Content-Type:application/json"
+    router
+      .get("/test/mime")
+      .consumes("*/json")
+      .handler(_.response()
+        .write("example mime")
+        .end()
+      )
+
 
     vertx
       .createHttpServer()
