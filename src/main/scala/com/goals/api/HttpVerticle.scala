@@ -14,6 +14,7 @@ class HttpVerticle extends ScalaVerticle {
 
     router
       .route()
+      .order(-1)
       .handler(routingContext => {
         routingContext
           .response()
@@ -59,6 +60,30 @@ class HttpVerticle extends ScalaVerticle {
           .response
           .end(s"this is a route that match for the 2 http methods : POST & PUT \n and here is the description: ${description.get} \n and the http method is ${routingContext.request().method()}")
       })
+
+    router
+      .route("/path/withOrder/")
+      .handler(rc => {
+        rc.response()
+          .write("first handler\n")
+        rc.next()
+      })
+
+    router
+      .route("/path/withOrder/")
+      .order(2)
+      .handler(rc => {
+        rc.response
+          .write("second handler\n")
+        rc.next()
+      })
+
+    router
+      .route("/path/withOrder/")
+      .handler(_.response
+        .write("third handler\n")
+        .end()
+      )
 
 
     vertx
