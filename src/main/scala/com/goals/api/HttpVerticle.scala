@@ -105,7 +105,6 @@ class HttpVerticle extends ScalaVerticle {
             .end
         )
 
-
     vertx
       .createHttpServer()
       .requestHandler(router.accept _)
