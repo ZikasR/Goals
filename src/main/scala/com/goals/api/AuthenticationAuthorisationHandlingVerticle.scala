@@ -1,8 +1,9 @@
 package com.goals.api
 
-import io.vertx.ext.auth.{AuthProvider, User}
+import io.vertx.scala.ext.auth.AuthProvider
+import io.vertx.ext.auth.oauth2.OAuth2FlowType
 import io.vertx.lang.scala.ScalaVerticle
-import io.vertx.lang.scala.json.JsonObject
+import io.vertx.scala.ext.auth.oauth2.OAuth2Auth
 import io.vertx.scala.ext.web.Router
 import io.vertx.scala.ext.web.handler.{CookieHandler, SessionHandler, UserSessionHandler}
 import io.vertx.scala.ext.web.sstore.LocalSessionStore
@@ -15,7 +16,7 @@ class AuthenticationAuthorisationHandlingVerticle extends ScalaVerticle{
 
     val router = Router.router(vertx)
 
-    val authProvider: AuthProvider = ShiroAuth.create(vertx, ShiroAuthRealmType.PROPERTIES, new JsonObject());
+    val authProvider: AuthProvider = OAuth2Auth.create(vertx, OAuth2FlowType.AUTH_CODE)
 
     router
       .route
@@ -28,5 +29,10 @@ class AuthenticationAuthorisationHandlingVerticle extends ScalaVerticle{
     router
       .route
       .handler(UserSessionHandler.create(authProvider))
+
+    vertx
+      .createHttpServer()
+      .requestHandler(router.accept _)
+      .listenFuture(8989, "0.0.0.0")
   }
 }
