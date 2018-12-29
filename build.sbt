@@ -5,6 +5,6 @@ lazy val goals = (project in file("."))
     name := "Goals",
     libraryDependencies ++= Vector(
       "io.vertx" %% "vertx-web-scala" % "3.6.0",
-      "io.vertx" %% "vertx-auth-oauth2-scala" % "3.6.0"
+      "io.vertx" %% "vertx-auth-shiro-scala" % "3.6.0"
     )
   )

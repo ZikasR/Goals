@@ -9,4 +9,5 @@ object Hello extends App {
     v.deployVerticle(s"scala:${classOf[SubRoutersVerticle].getName}")
     v.deployVerticle(s"scala:${classOf[ErrorHandlingVerticle].getName}")
     v.deployVerticle(s"scala:${classOf[BodyHandlingVerticle].getName}")
+    v.deployVerticle(s"scala:${classOf[AuthenticationAuthorisationHandlingVerticle].getName}")
 }
