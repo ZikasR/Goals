@@ -3,7 +3,7 @@ package com.goals.api
 import io.vertx.scala.ext.auth.AuthProvider
 import io.vertx.ext.auth.oauth2.OAuth2FlowType
 import io.vertx.lang.scala.ScalaVerticle
-import io.vertx.scala.ext.auth.oauth2.OAuth2Auth
+import io.vertx.scala.ext.auth.oauth2.{OAuth2Auth, OAuth2ClientOptions}
 import io.vertx.scala.ext.web.Router
 import io.vertx.scala.ext.web.handler.{CookieHandler, SessionHandler, UserSessionHandler}
 import io.vertx.scala.ext.web.sstore.LocalSessionStore
@@ -16,7 +16,9 @@ class AuthenticationAuthorisationHandlingVerticle extends ScalaVerticle{
 
     val router = Router.router(vertx)
 
-    val authProvider: AuthProvider = OAuth2Auth.create(vertx, OAuth2FlowType.AUTH_CODE)
+    val authProvider: AuthProvider = OAuth2Auth.create(vertx, OAuth2FlowType.AUTH_CODE, OAuth2ClientOptions()
+        .setClientID("client_Id")
+    )
 
     router
       .route
