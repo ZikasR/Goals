@@ -6,7 +6,7 @@ import io.vertx.scala.ext.auth.AuthProvider
 import io.vertx.lang.scala.ScalaVerticle
 import io.vertx.scala.ext.auth.shiro.{ShiroAuth, ShiroAuthOptions}
 import io.vertx.scala.ext.web.Router
-import io.vertx.scala.ext.web.handler.{BasicAuthHandler, CookieHandler, SessionHandler, UserSessionHandler}
+import io.vertx.scala.ext.web.handler._
 import io.vertx.scala.ext.web.sstore.LocalSessionStore
 
 import scala.concurrent.Future
@@ -33,7 +33,11 @@ class AuthenticationAuthorisationHandlingVerticle extends ScalaVerticle {
 
     router
       .route
-      .handler(UserSessionHandler.create(authProvider))
+      .handler(
+        BasicAuthHandler.create(authProvider)
+          .addAuthority("role:administrator")
+      )
+
 
     router
       .route()
