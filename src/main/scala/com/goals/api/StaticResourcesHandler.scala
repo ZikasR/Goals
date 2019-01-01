@@ -1,9 +1,8 @@
 package com.goals.api
 
 import io.vertx.lang.scala.ScalaVerticle
-import io.vertx.scala.core.{Vertx, VertxOptions}
 import io.vertx.scala.ext.web.Router
-import io.vertx.scala.ext.web.handler.StaticHandler
+import io.vertx.scala.ext.web.handler.{ErrorHandler, StaticHandler}
 
 import scala.concurrent.Future
 
@@ -20,6 +19,14 @@ class StaticResourcesHandler extends ScalaVerticle {
           .create()
           .setIndexPage("index.html") // this is the default behavior
       )
+
+    router
+        .route("/static/*")
+        .failureHandler(ErrorHandler.create()
+            //.handle(rc => {
+
+            //})
+        )
 
 
     vertx
