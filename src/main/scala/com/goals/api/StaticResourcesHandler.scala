@@ -1,5 +1,6 @@
 package com.goals.api
 
+import io.vertx.core.http.HttpHeaders
 import io.vertx.lang.scala.ScalaVerticle
 import io.vertx.scala.ext.web.Router
 import io.vertx.scala.ext.web.handler.{ErrorHandler, StaticHandler}
@@ -12,6 +13,18 @@ class StaticResourcesHandler extends ScalaVerticle {
 
     val router = Router.router(vertx)
 
+
+    router
+      .route()
+      .handler(rc => {
+        rc.response().putHeader(HttpHeaders.CONTENT_TYPE.toString, "text/html")
+        rc.next()
+      })
+
+    router
+      .route()
+      .failureHandler(ErrorHandler.create("error-handler-template.html"))
+
     router
       .route("/static/*")
       .handler(
@@ -20,13 +33,9 @@ class StaticResourcesHandler extends ScalaVerticle {
           .setIndexPage("index.html") // this is the default behavior
       )
 
-    router
-        .route("/static/*")
-        .failureHandler(ErrorHandler.create()
-            //.handle(rc => {
-
-            //})
-        )
+    router.route("/bob/*").handler(rc => {
+      rc.fail(404)
+    })
 
 
     vertx
