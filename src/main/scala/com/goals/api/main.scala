@@ -11,5 +11,6 @@ object Hello extends App {
     v.deployVerticle(s"scala:${classOf[BodyHandlingVerticle].getName}")
     v.deployVerticle(s"scala:${classOf[AuthenticationAuthorisationHandlingVerticle].getName}")
     v.deployVerticle(s"scala:${classOf[StaticResourcesHandler].getName}")
+    v.deployVerticle(s"scala:${classOf[ResponseTimeHandlerVerticle].getName}")
 
 }
