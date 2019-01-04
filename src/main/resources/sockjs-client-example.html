@@ -1,0 +1,26 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+
+var sock = new SockJS('http://localhost:9876/myapp/');
+ sock.onopen = function() {
+     console.log('open');
+     sock.send('Hello Zakaria');
+ };
+
+ sock.onmessage = function(e) {
+     console.log('message', e.data);
+     sock.close();
+ };
+
+ sock.onclose = function() {
+     console.log('close');
+ };
+
+</script>
+</html>
