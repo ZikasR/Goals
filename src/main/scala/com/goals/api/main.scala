@@ -13,5 +13,6 @@ object Hello extends App {
     v.deployVerticle(s"scala:${classOf[StaticResourcesHandler].getName}")
     v.deployVerticle(s"scala:${classOf[ResponseTimeHandlerVerticle].getName}")
     v.deployVerticle(s"scala:${classOf[SockJSHandlerVerticle].getName}")
+    v.deployVerticle(s"scala:${classOf[GoalVerticle].getName}")
 
 }
