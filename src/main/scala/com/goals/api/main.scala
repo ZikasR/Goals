@@ -1,5 +1,7 @@
 package com.goals.api 
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import io.vertx.scala.core._
 
 object Hello extends App {

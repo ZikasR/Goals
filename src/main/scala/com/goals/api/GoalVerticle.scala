@@ -1,8 +1,11 @@
 package com.goals.api
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.goals.domaine.Goal
 import io.vertx.lang.scala.ScalaVerticle
 import io.vertx.scala.ext.web.Router
+import io.vertx.scala.ext.web.handler.BodyHandler
 
 import scala.concurrent.Future
 
@@ -10,22 +13,31 @@ class GoalVerticle extends ScalaVerticle {
 
   override def startFuture(): Future[_] = {
 
+    val mapper = new ObjectMapper()
+    mapper.registerModule(DefaultScalaModule)
+
     val router = Router.router(vertx)
 
     router
-        .post("/goals/")
-        .handler(rc => {
+      .route
+      .handler(BodyHandler.create())
 
-          val body = rc.getBodyAsJson()
-          val goal = body.get.mapTo(classOf[Goal])
+    router
+      .post("/goals/")
+      .handler(rc => {
 
-          rc.response
-            .setChunked(true)
-            .setStatusCode(201)
-            .write(s"created : $body")
-            .end
+        val body = rc.getBodyAsJson()
 
-        })
+        val goal = mapper.readValue(body.get.toString, classOf[Goal])
+        println(s"goal: $goal")
+
+        rc.response
+          .setChunked(true)
+          .setStatusCode(201)
+          .write(s"created : $body")
+          .end
+
+      })
 
 
     vertx
