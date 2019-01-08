@@ -1,6 +1,8 @@
 package com.goals.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.goals.domaine.Goal
 import io.vertx.lang.scala.ScalaVerticle
@@ -15,6 +17,8 @@ class GoalVerticle extends ScalaVerticle {
 
     val mapper = new ObjectMapper()
     mapper.registerModule(DefaultScalaModule)
+      .registerModule(new Jdk8Module())
+      .registerModule(new JavaTimeModule())
 
     val router = Router.router(vertx)
 
@@ -34,7 +38,7 @@ class GoalVerticle extends ScalaVerticle {
         rc.response
           .setChunked(true)
           .setStatusCode(201)
-          .write(s"created : $body")
+          .write(s"created : $goal")
           .end
 
       })

@@ -2,13 +2,9 @@ package com.goals.domaine
 
 import java.time.{OffsetDateTime, ZoneOffset}
 
-class Goal {
+class Goal private (private val description: String, private val startDate: OffsetDateTime, private val endDate: Option[OffsetDateTime]) {
 
-  def description: String
-
-  def startDate: OffsetDateTime
-
-  def endDate: Option[OffsetDateTime]
+  override def toString: String = s"$description, Starts : $startDate and ends $endDate"
 }
 
 object Goal {
