@@ -10,5 +10,6 @@ lazy val goals = (project in file("."))
       "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.5",
       "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % "2.9.5",
       "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % "2.9.5",
+      "io.vertx" %% "vertx-mysql-postgresql-client-scala" % "3.6.0",
     )
   )
